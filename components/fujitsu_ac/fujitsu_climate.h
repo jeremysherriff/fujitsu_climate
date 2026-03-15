@@ -151,10 +151,10 @@ class FujitsuClimate : public climate::Climate, public Component {
     this->publish_state();
   }
 
-  void send_powerful_() {
+  bool send_powerful_() {
     if (this->mode == climate::CLIMATE_MODE_OFF) {
       ESP_LOGW(TAG, "Powerful command ignored — unit is OFF");
-      return;
+      return false;
     }
     uint8_t payload[5];
     if (fujitsu_ir::build_control_frame(payload, fujitsu_ir::CMD_POWERFUL)) {
@@ -162,7 +162,9 @@ class FujitsuClimate : public climate::Climate, public Component {
       ESP_LOGD(TAG, "Built 5-byte POWERFUL frame: %02X %02X %02X %02X %02X",
                payload[0], payload[1], payload[2], payload[3], payload[4]);
       this->frame_callbacks_.call(frame);
+      return true;
     }
+    return false;
   }
 
   void update_from_ir(
