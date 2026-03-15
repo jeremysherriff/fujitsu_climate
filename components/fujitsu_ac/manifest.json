@@ -1,0 +1,9 @@
+{
+  "domain": "fujitsu_ac",
+  "name": "Fujitsu AC Climate",
+  "version": "1.0",
+  "documentation": "local",
+  "requirements": [],
+  "dependencies": ["climate"],
+  "codeowners": []
+}
